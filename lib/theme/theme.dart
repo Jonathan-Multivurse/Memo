@@ -44,7 +44,7 @@ final ThemeData theme = ThemeData(
     ),
     subtitle1: TextStyle(
       color: Colors.grey[700],
-      fontSize: 14,
+      fontSize: 15,
       fontFamily: "Bold",
     ),
     subtitle2: TextStyle(

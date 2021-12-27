@@ -6,6 +6,7 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: AuthForm());
+    return WillPopScope(
+        onWillPop: () async => false, child: Container(child: AuthForm()));
   }
 }

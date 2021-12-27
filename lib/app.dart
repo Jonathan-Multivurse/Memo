@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ppm/screens/account.dart';
 import 'package:ppm/screens/home.dart';
 
 class App extends StatefulWidget {
@@ -18,7 +19,7 @@ class _AppState extends State<App> {
   static List<Widget> _widgetOptions = <Widget>[
     Container(child: Home()),
     Container(child: Center(child: Text('Tasks'))),
-    Container(child: Center(child: Text('Account'))),
+    Container(child: Account()),
   ];
 
   @override

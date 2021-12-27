@@ -39,12 +39,16 @@ class _HomeState extends State<Home> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          HomeCarousel(images: images),
-          CategoryTile(tileImages: tileImages, title: title, detials: details),
-        ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Container(
+        child: Column(
+          children: [
+            HomeCarousel(images: images),
+            CategoryTile(
+                tileImages: tileImages, title: title, detials: details),
+          ],
+        ),
       ),
     );
   }
