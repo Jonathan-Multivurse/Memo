@@ -35,7 +35,11 @@ class _AccountDetailsState extends State<AccountDetails> {
                     children: [
                       FabButtonModel(
                         tag: 'tag1',
-                        onPressed: () {},
+                        onPressed: () {
+                          {
+                            Navigator.pushNamed(context, NotificationsRoute);
+                          }
+                        },
                         child: Icon(
                           Icons.notifications,
                           color: Colors.green[500],

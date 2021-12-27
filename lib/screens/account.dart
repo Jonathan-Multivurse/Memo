@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ppm/widgets/account/account_details.dart';
+import 'package:ppm/widgets/account/memo_empty.dart';
 import 'package:ppm/widgets/account/memo_tile.dart';
 
 class Account extends StatefulWidget {
@@ -55,12 +56,13 @@ class _AccountState extends State<Account> {
         child: Column(
           children: [
             AccountDetails(),
-            MemoTile(
-              title: title,
-              type: type,
-              detials: details,
-              date: date,
-            ),
+            MemoEmpty()
+            // MemoTile(
+            //   title: title,
+            //   type: type,
+            //   detials: details,
+            //   date: date,
+            // ),
           ],
         ),
       ),

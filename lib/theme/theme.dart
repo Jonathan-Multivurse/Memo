@@ -17,9 +17,9 @@ final ThemeData theme = ThemeData(
       fontFamily: "Black",
     ),
     headline2: TextStyle(
-      color: Colors.green[500],
-      fontSize: 22.0,
-      fontFamily: "Bold",
+      color: Colors.grey[700],
+      fontSize: 16.0,
+      fontFamily: "Regular",
     ),
     headline3: TextStyle(
       color: Colors.green[500],
