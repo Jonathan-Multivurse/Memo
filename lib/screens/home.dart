@@ -19,23 +19,23 @@ class _HomeState extends State<Home> {
   List<String> tileImages = [
     'lib/assets/images/heirlooms.png',
     'lib/assets/images/collectibles.png',
-    'lib/assets/images/books.png',
     'lib/assets/images/furniture.png',
     'lib/assets/images/jewelry.png',
+    'lib/assets/images/other.png',
   ];
   List<String> title = [
     'heirlooms',
     'collectibles',
-    'Books',
     'Furniture',
-    'Jewelry'
+    'Jewelry',
+    'Miscellaneous',
   ];
   List<String> details = [
-    'Tap here for more details',
-    'Tap here for more details',
-    'Tap here for more details',
-    'Tap here for more details',
-    'Tap here for more details',
+    'Valuable objects that have belonged to a family for several generations.',
+    'Items such as antiques, books, vintage toys, record albums, comic books, art, figurines, etc.',
+    'Chairs, sofas, tables, and other pieces of furniture',
+    'Rings, earrings, watches, and other items',
+    'Any items that don\'t belong in the other categories',
   ];
   @override
   Widget build(BuildContext context) {

@@ -42,20 +42,24 @@ class _CategoryTileState extends State<CategoryTile> {
                     ),
                     SizedBox(width: 15),
                     Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.title[index].toUpperCase(),
-                          style: theme.textTheme.headline3,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          widget.detials[index],
-                          style: theme.textTheme.subtitle2,
-                        )
-                      ],
+                        child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.title[index].toUpperCase(),
+                            style: theme.textTheme.headline3,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            widget.detials[index],
+                            textAlign: TextAlign.start,
+                            style: theme.textTheme.subtitle2,
+                          )
+                        ],
+                      ),
                     )),
                   ],
                 ),

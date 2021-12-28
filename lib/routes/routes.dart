@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:ppm/app.dart';
 import 'package:ppm/screens/authentication.dart';
+import 'package:ppm/screens/memo_details.dart';
 import 'package:ppm/screens/notifications.dart';
 import 'package:ppm/screens/registration.dart';
 
@@ -10,6 +11,7 @@ const String RegistrationRoute = '/registration';
 const String ResetpasswordRoute = '/reset-password';
 const String HomeRoute = '/home';
 const String NotificationsRoute = '/notifications';
+const String MemoDetailsRoute = '/memodetails';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -38,6 +40,13 @@ class Routes {
       case NotificationsRoute:
         return PageTransition(
           child: NotificationScreen(),
+          type: PageTransitionType.rightToLeftWithFade,
+          settings: settings,
+          duration: const Duration(milliseconds: 200),
+        );
+      case MemoDetailsRoute:
+        return PageTransition(
+          child: MemoDetailsScreen(),
           type: PageTransitionType.rightToLeftWithFade,
           settings: settings,
           duration: const Duration(milliseconds: 200),

@@ -56,13 +56,13 @@ class _AccountState extends State<Account> {
         child: Column(
           children: [
             AccountDetails(),
-            MemoEmpty()
-            // MemoTile(
-            //   title: title,
-            //   type: type,
-            //   detials: details,
-            //   date: date,
-            // ),
+            // MemoEmpty()
+            MemoTile(
+              title: title,
+              type: type,
+              detials: details,
+              date: date,
+            ),
           ],
         ),
       ),

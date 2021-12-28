@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppm/screens/account.dart';
 import 'package:ppm/screens/home.dart';
+import 'package:ppm/screens/memo.dart';
 
 class App extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _AppState extends State<App> {
 
   static List<Widget> _widgetOptions = <Widget>[
     Container(child: Home()),
-    Container(child: Center(child: Text('Tasks'))),
+    Container(child: Memo()),
     Container(child: Account()),
   ];
 
@@ -61,7 +62,6 @@ class _AppState extends State<App> {
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.green[500],
           unselectedItemColor: Colors.grey[700],
-          
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
         ),

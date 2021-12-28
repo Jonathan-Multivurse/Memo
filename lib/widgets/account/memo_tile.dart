@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ppm/components/tile_model.dart';
+import 'package:ppm/routes/routes.dart';
 import 'package:ppm/theme/theme.dart';
 
 class MemoTile extends StatefulWidget {
@@ -48,7 +49,7 @@ class _MemoTileState extends State<MemoTile> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            'Type: '+widget.type[index],
+                            'Type: ' + widget.type[index],
                             style: theme.textTheme.subtitle2,
                           ),
                           SizedBox(height: 10),
@@ -66,7 +67,9 @@ class _MemoTileState extends State<MemoTile> {
                     ],
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, MemoDetailsRoute);
+                },
               ),
             );
           }),

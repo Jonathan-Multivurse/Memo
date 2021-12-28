@@ -10,25 +10,25 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70),
-        child: AppBar(
-          toolbarHeight: 70,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          title: Text(
-            'Notifications',
-            style: theme.textTheme.headline3
+        child: Material(
+          elevation: 1,
+          child: AppBar(
+            toolbarHeight: 70,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: Text('Notifications', style: theme.textTheme.headline3),
+            centerTitle: true,
+            leading: IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              color: Colors.green[500],
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            automaticallyImplyLeading: false,
           ),
-          centerTitle: true,
-          leading: IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            color: Colors.green[500],
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          automaticallyImplyLeading: false,
         ),
       ),
       body: Container(

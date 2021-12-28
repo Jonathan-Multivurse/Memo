@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 final ThemeData theme = ThemeData(
-  brightness: Brightness.light,
   primaryColor: Colors.white,
   hoverColor: Colors.grey[200],
   highlightColor: Colors.transparent,
