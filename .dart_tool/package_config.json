@@ -249,9 +249,9 @@
     },
     {
       "name": "modal_bottom_sheet",
-      "rootUri": "file:///Users/jonathandaniels/Development/flutter/.pub-cache/hosted/pub.dartlang.org/modal_bottom_sheet-1.0.0+1",
+      "rootUri": "file:///Users/jonathandaniels/Development/flutter/.pub-cache/hosted/pub.dartlang.org/modal_bottom_sheet-2.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "nested",
@@ -458,7 +458,7 @@
       "languageVersion": "2.15"
     }
   ],
-  "generated": "2021-12-27T02:25:45.227012Z",
+  "generated": "2021-12-28T19:13:13.500242Z",
   "generator": "pub",
   "generatorVersion": "2.15.1"
 }

@@ -44,6 +44,16 @@ class _MemoFormState extends State<MemoForm> {
   var _nameController = TextEditingController();
   var _addressController = TextEditingController();
   var _rnshipController = TextEditingController();
+
+  String dropdownValue = "Property type";
+  List list = <String>[
+    'Property type',
+    'Heirloom',
+    'Collectibles',
+    'Furniture',
+    'Jewelry',
+    'Miscellaneous',
+  ];
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -59,6 +69,34 @@ class _MemoFormState extends State<MemoForm> {
                 suffixIcon: Visibility(visible: false, child: Container()),
                 validator: _titleValidator,
                 controller: _titleController,
+              ),
+              SizedBox(height: 20),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.green[500]!),
+                    borderRadius: BorderRadius.circular(5)),
+                child: DropdownButton<String>(
+                  isDense: true,
+                  isExpanded: true,
+                  dropdownColor: Colors.white,
+                  value: dropdownValue,
+                  alignment: AlignmentDirectional.centerStart,
+                  elevation: 1,
+                  underline: Container(color: Colors.transparent),
+                  style: theme.textTheme.subtitle2,
+                  onChanged: (newValue) {
+                    setState(() {
+                      dropdownValue = newValue!;
+                    });
+                  },
+                  items: list.map<DropdownMenuItem<String>>((value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
               ),
               SizedBox(height: 20),
               MemoInputModel(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ppm/components/modal.dart';
 import 'package:ppm/theme/theme.dart';
+import 'package:ppm/widgets/account/edit_modal.dart';
 
 class MemoDetailsScreen extends StatelessWidget {
   const MemoDetailsScreen({Key? key}) : super(key: key);
@@ -36,7 +38,14 @@ class MemoDetailsScreen extends StatelessWidget {
                 color: Colors.green[500],
                 icon: Icon(Icons.settings),
                 onPressed: () {
-                  // do something
+                  showFloatingModalBottomSheet(
+                    context: context,
+                    builder: (context) => EditModal(
+                      onPressedEdit: () {},
+                      onPressedDelete: () {},
+                      onPressedCancel: () {},
+                    ),
+                  );
                 },
               )
             ],
@@ -70,6 +79,27 @@ class MemoDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
+                'Property type',
+                style: theme.textTheme.headline3,
+              ),
+              SizedBox(height: 10),
+              Material(
+                borderRadius: BorderRadius.circular(10),
+                elevation: 0.5,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Flexible(
+                      child: Text(
+                    'Collectibles',
+                    style: theme.textTheme.subtitle2,
+                  )),
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
                 'Description',
                 style: theme.textTheme.headline3,
               ),
@@ -84,7 +114,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'afjebjk adfjnerj erfjnerf nerfjnerfn ejfgner  drfaerfg ergferq erfg eqrg egferq gerqg erfgerg e erger ergerg erger ergreg eqrgerg erwgeqg ergertg eqghert ',
+                    'Contrary to popular belief, Lorem Ipsum is not simply random text. Contrary to popular belief, Lorem Ipsum is not simply random text. Contrary to popular belief, Lorem Ipsum is not simply random text. ',
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -105,7 +135,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'afj eqrgerg erwgeqg ergertg eqghert ',
+                    'Contrary to popular belief, Lorem Ipsum is not simply random text.',
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -126,7 +156,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'afjebeg eqghert ',
+                    'Contrary to popular belief, Lorem Ipsum is not simply random text.',
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -147,7 +177,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'afrfg erger ergregg ergertg eqghert ',
+                    'Contrary to popular belief, Lorem Ipsum is not simply random text.',
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -168,7 +198,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'aerg erwgeqg ergertg',
+                    'Daughter',
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
