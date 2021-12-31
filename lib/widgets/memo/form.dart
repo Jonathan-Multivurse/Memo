@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:ppm/components/alert_model.dart';
+import 'package:ppm/components/confirmation_model.dart';
 import 'package:ppm/components/memo_input.dart';
 import 'package:ppm/theme/theme.dart';
 import 'package:ppm/widgets/common/button.dart';
+import 'package:intl/intl.dart';
 
 class MemoForm extends StatefulWidget {
   const MemoForm({Key? key}) : super(key: key);
@@ -12,40 +16,43 @@ class MemoForm extends StatefulWidget {
 }
 
 class _MemoFormState extends State<MemoForm> {
+  final DateTime now = DateTime.now();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+
   final _titleValidator = MultiValidator([
     RequiredValidator(errorText: 'Info is required'),
-    MinLengthValidator(5, errorText: 'Content: minimum 5 characters long'),
+    MinLengthValidator(3, errorText: 'Content: minimum 5 characters long'),
   ]);
   final _descValidator = MultiValidator([
     RequiredValidator(errorText: 'Info is required'),
-    MinLengthValidator(5, errorText: 'Content: minimum 5 characters long'),
+    MinLengthValidator(3, errorText: 'Content: minimum 5 characters long'),
   ]);
   final _fromValidator = MultiValidator([
     RequiredValidator(errorText: 'Info is required'),
-    MinLengthValidator(5, errorText: 'Content: minimum 5 characters long'),
+    MinLengthValidator(3, errorText: 'Content: minimum 5 characters long'),
   ]);
   final _nameValidator = MultiValidator([
     RequiredValidator(errorText: 'Info is required'),
-    MinLengthValidator(5, errorText: 'Content: minimum 5 characters long'),
+    MinLengthValidator(3, errorText: 'Content: minimum 5 characters long'),
   ]);
   final _addressValidator = MultiValidator([
     RequiredValidator(errorText: 'Info is required'),
-    MinLengthValidator(5, errorText: 'Content: minimum 5 characters long'),
+    MinLengthValidator(3, errorText: 'Content: minimum 5 characters long'),
   ]);
   final _rnshipValidator = MultiValidator([
     RequiredValidator(errorText: 'Info is required'),
-    MinLengthValidator(5, errorText: 'Content: minimum 5 characters long'),
+    MinLengthValidator(3, errorText: 'Content: minimum 5 characters long'),
   ]);
 
   final _formKey = GlobalKey<FormState>();
   var _titleController = TextEditingController();
+  String dropdownValue = "Property type";
   var _descController = TextEditingController();
   var _fromController = TextEditingController();
   var _nameController = TextEditingController();
   var _addressController = TextEditingController();
   var _rnshipController = TextEditingController();
 
-  String dropdownValue = "Property type";
   List list = <String>[
     'Property type',
     'Heirloom',
@@ -56,6 +63,53 @@ class _MemoFormState extends State<MemoForm> {
   ];
   @override
   Widget build(BuildContext context) {
+    final String formatted = formatter.format(now);
+    void createMemo() {
+      FirebaseFirestore.instance.collection("memos").add({
+        "title": _titleController.text,
+        "type": dropdownValue,
+        "description": _descController.text,
+        "obtainedFrom": _fromController.text,
+        "recipientName": _nameController.text,
+        "recipientAddress": _addressController.text,
+        "relationship": _rnshipController.text,
+        "timeStamp": formatted
+      }).then((res) {
+        FirebaseFirestore.instance.collection("notifications").add({
+          "info": 'Memo created successfully!',
+        });
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Center(
+                  child: ConfirmationModel(
+                      title: 'Success!',
+                      data:
+                          'Your memo is created. Please navigate to your account to see it.',
+                      height: 250,
+                      width: 300,
+                      padding: EdgeInsets.all(20),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      button: 'Got it!'));
+            });
+      }).catchError((err) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Center(
+                child: AlertModel(
+                  padding: EdgeInsets.all(20),
+                  data: 'Error! Something went wrong!',
+                  height: 200,
+                  width: 400,
+                ),
+              );
+            });
+      });
+    }
+
     return Form(
       key: _formKey,
       child: Expanded(
@@ -143,6 +197,7 @@ class _MemoFormState extends State<MemoForm> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       print('validated');
+                      createMemo();
                       setState(() {
                         _titleController.text = '';
                         _descController.text = '';

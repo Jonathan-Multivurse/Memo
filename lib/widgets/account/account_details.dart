@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ppm/components/avatar_model.dart';
 import 'package:ppm/components/fab_button_model.dart';
-import 'package:ppm/components/logout_confirmation_model.dart';
+import 'package:ppm/components/confirmation_model.dart';
 import 'package:ppm/routes/routes.dart';
 import 'package:ppm/theme/theme.dart';
 
