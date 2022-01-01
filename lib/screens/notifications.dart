@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ppm/components/confirmation_model.dart';
 import 'package:ppm/theme/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ppm/widgets/account/memo_empty.dart';
@@ -46,9 +47,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasError) return Text("Something went wrong");
 
-            if (!snapshot.hasData) return Padding(
-              padding: EdgeInsets.all(50),
-              child: Text("0 Notifications!"));
+            if (!snapshot.hasData)
+              return Padding(
+                  padding: EdgeInsets.all(50), child: Text("0 Notifications!"));
             if (snapshot.connectionState == ConnectionState.waiting)
               return Center(
                   child: CircularProgressIndicator(
@@ -68,7 +69,28 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           background: Container(color: Colors.green[500]),
                           key: UniqueKey(),
                           onDismissed: (DismissDirection direction) {
-                            setState(() {});
+                            notiRef.doc(data.id).delete().then((value) => {
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return Center(
+                                          child: ConfirmationModel(
+                                            title: 'Notification Deleted!',
+                                            data:
+                                                'You have successuly removed this notification',
+                                            height: 200,
+                                            width: 300,
+                                            padding: EdgeInsets.all(20),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              setState(() {});
+                                            },
+                                            button: 'Got it',
+                                          ),
+                                        );
+                                      }),
+                                });
                           },
                         ),
                         Divider(color: Colors.green[500])

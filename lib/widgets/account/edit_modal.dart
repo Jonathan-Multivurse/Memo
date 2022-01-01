@@ -33,7 +33,7 @@ class EditModal extends StatelessWidget {
           ListTile(
             dense: false,
             minVerticalPadding: 0,
-            onTap: () {},
+            onTap: onPressedDelete,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

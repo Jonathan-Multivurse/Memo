@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:ppm/app.dart';
+import 'package:ppm/screens/account.dart';
 import 'package:ppm/screens/authentication.dart';
 import 'package:ppm/screens/memo_details.dart';
 import 'package:ppm/screens/notifications.dart';
@@ -11,6 +12,7 @@ const String AuthenticationRoute = '/authentication';
 const String RegistrationRoute = '/registration';
 const String ResetpasswordRoute = '/reset-password';
 const String HomeRoute = '/home';
+const String AccountRoute = '/accountroute';
 const String NotificationsRoute = '/notifications';
 const String MemoDetailsRoute = '/memodetails';
 const String ResetRoute = '/resetroute';
@@ -42,6 +44,13 @@ class Routes {
       case NotificationsRoute:
         return PageTransition(
           child: NotificationScreen(),
+          type: PageTransitionType.rightToLeftWithFade,
+          settings: settings,
+          duration: const Duration(milliseconds: 200),
+        );
+      case AccountRoute:
+        return PageTransition(
+          child: Account(),
           type: PageTransitionType.rightToLeftWithFade,
           settings: settings,
           duration: const Duration(milliseconds: 200),

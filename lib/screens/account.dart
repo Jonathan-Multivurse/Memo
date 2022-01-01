@@ -58,6 +58,7 @@ class _AccountState extends State<Account> {
                           onTap: () {
                             Navigator.pushNamed(context, MemoDetailsRoute,
                                 arguments: MemoArguments(
+                                  data.id,
                                   data['title'],
                                   data['type'],
                                   data['description'],
@@ -65,10 +66,13 @@ class _AccountState extends State<Account> {
                                   data['recipientName'],
                                   data['recipientAddress'],
                                   data['relationship'],
-                                ));
+                                )).then((value) => {
+                                  setState(() {}),
+                                });
                           },
                         ))
                     .toList();
+
                 return Expanded(
                   child: ListView(children: memoList),
                 );

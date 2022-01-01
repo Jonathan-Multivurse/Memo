@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ppm/components/confirmation_model.dart';
 import 'package:ppm/components/modal.dart';
+import 'package:ppm/routes/routes.dart';
 import 'package:ppm/theme/theme.dart';
 import 'package:ppm/widgets/account/edit_modal.dart';
 
 class MemoArguments {
+  final String id;
   final String title;
   final String type;
   final String description;
@@ -13,6 +18,7 @@ class MemoArguments {
   final String relationship;
 
   MemoArguments(
+    this.id,
     this.title,
     this.type,
     this.description,
@@ -23,12 +29,18 @@ class MemoArguments {
   );
 }
 
-class MemoDetailsScreen extends StatelessWidget {
+class MemoDetailsScreen extends StatefulWidget {
   const MemoDetailsScreen({Key? key}) : super(key: key);
 
   @override
+  State<MemoDetailsScreen> createState() => _MemoDetailsScreenState();
+}
+
+class _MemoDetailsScreenState extends State<MemoDetailsScreen> {
+  @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as MemoArguments;
+    var user = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70),
@@ -62,9 +74,48 @@ class MemoDetailsScreen extends StatelessWidget {
                   showFloatingModalBottomSheet(
                     context: context,
                     builder: (context) => EditModal(
-                      onPressedEdit: () {},
-                      onPressedDelete: () {},
-                      onPressedCancel: () {},
+                      onPressedEdit: () {
+                        Navigator.pop(context);
+                      },
+                      onPressedDelete: () {
+                        FirebaseFirestore.instance
+                            .collection('memos')
+                            .doc(args.id)
+                            .delete()
+                            .then((value) => {
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return Center(
+                                          child: ConfirmationModel(
+                                            title: 'Memo Deleted!',
+                                            data:
+                                                'You have successuly removed this memo',
+                                            height: 200,
+                                            width: 300,
+                                            padding: EdgeInsets.all(20),
+                                            onPressed: () {
+                                              FirebaseFirestore.instance
+                                                  .collection("notifications")
+                                                  .add({
+                                                "uid": user,
+                                                "info":
+                                                    'Memo deleted successfully!',
+                                              });
+                                              Navigator.pop(context);
+                                              Navigator.pop(context);
+                                              Navigator.pop(context);
+                                            },
+                                            button: 'Got it',
+                                          ),
+                                        );
+                                      }),
+                                });
+                      },
+                      onPressedCancel: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   );
                 },
