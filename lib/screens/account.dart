@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ppm/components/alert_model.dart';
 import 'package:ppm/routes/routes.dart';
 import 'package:ppm/screens/memo_details.dart';
 import 'package:ppm/widgets/account/account_details.dart';

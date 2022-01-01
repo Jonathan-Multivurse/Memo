@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ppm/components/avatar_model.dart';
 import 'package:ppm/components/fab_button_model.dart';
@@ -17,6 +19,9 @@ class _AccountDetailsState extends State<AccountDetails> {
   Widget build(BuildContext context) {
     var device = MediaQuery.of(context).size;
     var height = device.width;
+    var user = FirebaseAuth.instance.currentUser!.uid;
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
     return Column(
       children: [
         Material(
@@ -83,13 +88,40 @@ class _AccountDetailsState extends State<AccountDetails> {
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 5),
-                  child: Text('Alex Roberts'.toUpperCase(),
-                      style: theme.textTheme.subtitle1),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Text('alexroberts@gmail.com',
-                      style: theme.textTheme.subtitle2),
+                  child: FutureBuilder<DocumentSnapshot>(
+                    future: users.doc(user).get(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<DocumentSnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text("Something went wrong");
+                      }
+
+                      if (snapshot.hasData && !snapshot.data!.exists) {
+                        return Text("Document does not exist");
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        Map<String, dynamic> data =
+                            snapshot.data!.data() as Map<String, dynamic>;
+                        return Column(
+                          children: [
+                            Text(
+                              "${data['firstName']} ${data['lastName']}"
+                                  .toUpperCase(),
+                              style: theme.textTheme.subtitle1,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 5),
+                              child: Text('${data['email']}',
+                                  style: theme.textTheme.subtitle2),
+                            ),
+                          ],
+                        );
+                      }
+
+                      return Text("loading");
+                    },
+                  ),
                 ),
               ],
             ),
