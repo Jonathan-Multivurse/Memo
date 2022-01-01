@@ -3,11 +3,32 @@ import 'package:ppm/components/modal.dart';
 import 'package:ppm/theme/theme.dart';
 import 'package:ppm/widgets/account/edit_modal.dart';
 
+class MemoArguments {
+  final String title;
+  final String type;
+  final String description;
+  final String from;
+  final String recipientName;
+  final String recipientAddress;
+  final String relationship;
+
+  MemoArguments(
+    this.title,
+    this.type,
+    this.description,
+    this.from,
+    this.recipientName,
+    this.recipientAddress,
+    this.relationship,
+  );
+}
+
 class MemoDetailsScreen extends StatelessWidget {
   const MemoDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as MemoArguments;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70),
@@ -72,7 +93,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'Some memo title',
+                    args.title,
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -93,7 +114,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'Collectibles',
+                    args.type,
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -114,7 +135,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'Contrary to popular belief, Lorem Ipsum is not simply random text. Contrary to popular belief, Lorem Ipsum is not simply random text. Contrary to popular belief, Lorem Ipsum is not simply random text. ',
+                    args.description,
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -135,7 +156,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'Contrary to popular belief, Lorem Ipsum is not simply random text.',
+                    args.from,
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -156,7 +177,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'Contrary to popular belief, Lorem Ipsum is not simply random text.',
+                    args.recipientName,
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -177,7 +198,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'Contrary to popular belief, Lorem Ipsum is not simply random text.',
+                    args.recipientAddress,
                     style: theme.textTheme.subtitle2,
                   )),
                 ),
@@ -198,7 +219,7 @@ class MemoDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)),
                   child: Flexible(
                       child: Text(
-                    'Daughter',
+                    args.relationship,
                     style: theme.textTheme.subtitle2,
                   )),
                 ),

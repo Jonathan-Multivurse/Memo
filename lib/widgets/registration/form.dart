@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:ppm/components/alert_model.dart';
-import 'package:ppm/components/success_model.dart';
 import 'package:ppm/routes/routes.dart';
 import 'package:ppm/state/password/password_cubit.dart';
 import 'package:ppm/state/terms/terms_cubit.dart';

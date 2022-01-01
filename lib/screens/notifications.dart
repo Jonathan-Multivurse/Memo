@@ -1,10 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ppm/theme/theme.dart';
-import 'package:ppm/widgets/notifications/notifications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ppm/widgets/account/memo_empty.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
+  @override
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+  var user = FirebaseAuth.instance.currentUser!.uid;
+  final notiRef = FirebaseFirestore.instance.collection("notifications");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +41,48 @@ class NotificationScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-        child: Notifications(),
+        child: FutureBuilder<QuerySnapshot>(
+          future: notiRef.where('uid', isEqualTo: user).get(),
+          builder: (BuildContext context, snapshot) {
+            if (snapshot.hasError) return Text("Something went wrong");
+
+            if (!snapshot.hasData) return Padding(
+              padding: EdgeInsets.all(50),
+              child: Text("0 Notifications!"));
+            if (snapshot.connectionState == ConnectionState.waiting)
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Colors.green[500],
+              ));
+            final List<Widget> notiList = snapshot.data!.docs
+                .map((data) => Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Dismissible(
+                          child: ListTile(
+                            title: Text(
+                              data['info'],
+                              style: theme.textTheme.subtitle2,
+                            ),
+                          ),
+                          background: Container(color: Colors.green[500]),
+                          key: UniqueKey(),
+                          onDismissed: (DismissDirection direction) {
+                            setState(() {});
+                          },
+                        ),
+                        Divider(color: Colors.green[500])
+                      ],
+                    ))
+                .toList();
+            return Padding(
+              padding: EdgeInsets.only(top: 9),
+              child: ListView(
+                children: notiList,
+              ),
+            );
+          },
+        ),
       ),
     );
   }

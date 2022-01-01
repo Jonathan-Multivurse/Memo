@@ -11,30 +11,28 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.separated(
-        separatorBuilder: (context, index) {
-          return Divider(
-            color: Colors.green[500],
-          );
-        },
-        itemCount: 5,
-        itemBuilder: (BuildContext context, int index) {
-          return Dismissible(
-            child: ListTile(
-              title: Text(
-                'notifications',
-                style: theme.textTheme.subtitle2,
-              ),
+    return ListView.separated(
+      separatorBuilder: (context, index) {
+        return Divider(
+          color: Colors.green[500],
+        );
+      },
+      itemCount: 5,
+      itemBuilder: (BuildContext context, int index) {
+        return Dismissible(
+          child: ListTile(
+            title: Text(
+              'notifications',
+              style: theme.textTheme.subtitle2,
             ),
-            background: Container(color: Colors.green[500]),
-            key: UniqueKey(),
-            onDismissed: (DismissDirection direction) {
-              setState(() {});
-            },
-          );
-        },
-      ),
+          ),
+          background: Container(color: Colors.green[500]),
+          key: UniqueKey(),
+          onDismissed: (DismissDirection direction) {
+            setState(() {});
+          },
+        );
+      },
     );
   }
 }

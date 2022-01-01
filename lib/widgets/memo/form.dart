@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:ppm/components/alert_model.dart';
@@ -17,7 +18,7 @@ class MemoForm extends StatefulWidget {
 
 class _MemoFormState extends State<MemoForm> {
   final DateTime now = DateTime.now();
-  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm a');
 
   final _titleValidator = MultiValidator([
     RequiredValidator(errorText: 'Info is required'),
@@ -61,11 +62,14 @@ class _MemoFormState extends State<MemoForm> {
     'Jewelry',
     'Miscellaneous',
   ];
+
+  var user = FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
     final String formatted = formatter.format(now);
     void createMemo() {
       FirebaseFirestore.instance.collection("memos").add({
+        "uid": user,
         "title": _titleController.text,
         "type": dropdownValue,
         "description": _descController.text,
@@ -76,6 +80,7 @@ class _MemoFormState extends State<MemoForm> {
         "timeStamp": formatted
       }).then((res) {
         FirebaseFirestore.instance.collection("notifications").add({
+          "uid": user,
           "info": 'Memo created successfully!',
         });
         showDialog(
