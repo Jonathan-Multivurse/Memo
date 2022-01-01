@@ -5,6 +5,7 @@ import 'package:ppm/screens/authentication.dart';
 import 'package:ppm/screens/memo_details.dart';
 import 'package:ppm/screens/notifications.dart';
 import 'package:ppm/screens/registration.dart';
+import 'package:ppm/widgets/authentication/pass_reset.dart';
 
 const String AuthenticationRoute = '/authentication';
 const String RegistrationRoute = '/registration';
@@ -12,6 +13,7 @@ const String ResetpasswordRoute = '/reset-password';
 const String HomeRoute = '/home';
 const String NotificationsRoute = '/notifications';
 const String MemoDetailsRoute = '/memodetails';
+const String ResetRoute = '/resetroute';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -47,6 +49,13 @@ class Routes {
       case MemoDetailsRoute:
         return PageTransition(
           child: MemoDetailsScreen(),
+          type: PageTransitionType.rightToLeftWithFade,
+          settings: settings,
+          duration: const Duration(milliseconds: 200),
+        );
+      case ResetRoute:
+        return PageTransition(
+          child: ResetPassword(),
           type: PageTransitionType.rightToLeftWithFade,
           settings: settings,
           duration: const Duration(milliseconds: 200),

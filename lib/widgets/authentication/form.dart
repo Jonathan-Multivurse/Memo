@@ -142,7 +142,7 @@ class _AuthFormState extends State<AuthForm> {
                     ),
                     ForgotPassword(
                       onTap: () {
-                        print('works');
+                        Navigator.pushNamed(context, ResetRoute);
                       },
                     )
                   ],
