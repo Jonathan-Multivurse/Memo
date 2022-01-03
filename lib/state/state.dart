@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ppm/state/edit_memo/edit_memo.dart';
 import 'package:ppm/state/password/password_cubit.dart';
 import 'package:ppm/state/terms/terms_cubit.dart';
 
@@ -12,6 +13,9 @@ stateProvider(MaterialApp child) {
       ),
       BlocProvider<TermsCubit>(
         create: (BuildContext context) => TermsCubit(),
+      ),
+      BlocProvider<EditCubit>(
+        create: (BuildContext context) => EditCubit(),
       ),
     ],
   );

@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ppm/components/confirmation_model.dart';
 import 'package:ppm/components/modal.dart';
-import 'package:ppm/routes/routes.dart';
+import 'package:ppm/screens/edit_form.dart';
+import 'package:ppm/state/edit_memo/edit_memo.dart';
 import 'package:ppm/theme/theme.dart';
 import 'package:ppm/widgets/account/edit_modal.dart';
 
@@ -75,6 +77,7 @@ class _MemoDetailsScreenState extends State<MemoDetailsScreen> {
                     context: context,
                     builder: (context) => EditModal(
                       onPressedEdit: () {
+                        context.read<EditCubit>().showForm();
                         Navigator.pop(context);
                       },
                       onPressedDelete: () {
@@ -125,159 +128,173 @@ class _MemoDetailsScreenState extends State<MemoDetailsScreen> {
           ),
         ),
       ),
-      body: Container(
-          padding: EdgeInsets.all(20),
-          child: ListView(
-            children: [
-              Text(
-                'Title',
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 0.5,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Flexible(
-                      child: Text(
-                    args.title,
-                    style: theme.textTheme.subtitle2,
-                  )),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Property type',
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 0.5,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Flexible(
-                      child: Text(
-                    args.type,
-                    style: theme.textTheme.subtitle2,
-                  )),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Description',
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 0.5,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Flexible(
-                      child: Text(
-                    args.description,
-                    style: theme.textTheme.subtitle2,
-                  )),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Obtained from',
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 0.5,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Flexible(
-                      child: Text(
-                    args.from,
-                    style: theme.textTheme.subtitle2,
-                  )),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Recipient',
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 0.5,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Flexible(
-                      child: Text(
-                    args.recipientName,
-                    style: theme.textTheme.subtitle2,
-                  )),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Address',
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 0.5,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Flexible(
-                      child: Text(
-                    args.recipientAddress,
-                    style: theme.textTheme.subtitle2,
-                  )),
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Relationship',
-                style: theme.textTheme.headline3,
-              ),
-              SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 0.5,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Flexible(
-                      child: Text(
-                    args.relationship,
-                    style: theme.textTheme.subtitle2,
-                  )),
-                ),
-              ),
-              SizedBox(height: 10),
-            ],
-          )),
+      body: BlocBuilder<EditCubit, bool>(
+        builder: (context, state) {
+          return state == false
+              ? Container(
+                  padding: EdgeInsets.all(20),
+                  child: ListView(
+                    children: [
+                      Text(
+                        'Title',
+                        style: theme.textTheme.headline3,
+                      ),
+                      SizedBox(height: 10),
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 0.5,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Flexible(
+                              child: Text(
+                            args.title,
+                            style: theme.textTheme.subtitle2,
+                          )),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Property type',
+                        style: theme.textTheme.headline3,
+                      ),
+                      SizedBox(height: 10),
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 0.5,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Flexible(
+                              child: Text(
+                            args.type,
+                            style: theme.textTheme.subtitle2,
+                          )),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Description',
+                        style: theme.textTheme.headline3,
+                      ),
+                      SizedBox(height: 10),
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 0.5,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Flexible(
+                              child: Text(
+                            args.description,
+                            style: theme.textTheme.subtitle2,
+                          )),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Obtained from',
+                        style: theme.textTheme.headline3,
+                      ),
+                      SizedBox(height: 10),
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 0.5,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Flexible(
+                              child: Text(
+                            args.from,
+                            style: theme.textTheme.subtitle2,
+                          )),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Recipient',
+                        style: theme.textTheme.headline3,
+                      ),
+                      SizedBox(height: 10),
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 0.5,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Flexible(
+                              child: Text(
+                            args.recipientName,
+                            style: theme.textTheme.subtitle2,
+                          )),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Address',
+                        style: theme.textTheme.headline3,
+                      ),
+                      SizedBox(height: 10),
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 0.5,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Flexible(
+                              child: Text(
+                            args.recipientAddress,
+                            style: theme.textTheme.subtitle2,
+                          )),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Relationship',
+                        style: theme.textTheme.headline3,
+                      ),
+                      SizedBox(height: 10),
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        elevation: 0.5,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Flexible(
+                              child: Text(
+                            args.relationship,
+                            style: theme.textTheme.subtitle2,
+                          )),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ))
+              : EditForm(
+                  id: args.id,
+                  title: args.title,
+                  dropDown: args.type,
+                  desc: args.description,
+                  from: args.from,
+                  name: args.recipientName,
+                  address: args.recipientAddress,
+                  rnship: args.relationship);
+        },
+      ),
     );
   }
 }

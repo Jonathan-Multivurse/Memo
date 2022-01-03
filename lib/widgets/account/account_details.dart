@@ -119,7 +119,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                         );
                       }
 
-                      return Text("loading");
+                      return Text('loading');
                     },
                   ),
                 ),

@@ -15,6 +15,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  bool spinner = true;
   var user = FirebaseAuth.instance.currentUser!.uid;
   final memosRef = FirebaseFirestore.instance.collection("memos");
 
@@ -34,48 +35,50 @@ class _AccountState extends State<Account> {
                 print(err);
               }),
               builder: (BuildContext context, snapshot) {
-                if (snapshot.hasError)
+                if (snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.all(50),
                     child: Text("Something went wrong"),
                   );
-
-                if (!snapshot.hasData) return MemoEmpty();
-
-                if (snapshot.connectionState == ConnectionState.waiting)
+                } else if (!snapshot.hasData) {
+                  return MemoEmpty();
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
                   return Padding(
                     padding: const EdgeInsets.all(50),
                     child: CircularProgressIndicator(
                       color: Colors.green[500],
                     ),
                   );
-                final List<Widget> memoList = snapshot.data!.docs
-                    .map((data) => MemoTile(
-                          title: data['title'],
-                          type: data['type'],
-                          details: data['description'],
-                          date: data['timeStamp'],
-                          onTap: () {
-                            Navigator.pushNamed(context, MemoDetailsRoute,
-                                arguments: MemoArguments(
-                                  data.id,
-                                  data['title'],
-                                  data['type'],
-                                  data['description'],
-                                  data['obtainedFrom'],
-                                  data['recipientName'],
-                                  data['recipientAddress'],
-                                  data['relationship'],
-                                )).then((value) => {
-                                  setState(() {}),
-                                });
-                          },
-                        ))
-                    .toList();
+                } else {
+                  final List<Widget> memoList = snapshot.data!.docs
+                      .map((data) => MemoTile(
+                            title: data['title'],
+                            type: data['type'],
+                            details: data['description'],
+                            date: data['timeStamp'],
+                            onTap: () {
+                              Navigator.pushNamed(context, MemoDetailsRoute,
+                                  arguments: MemoArguments(
+                                    data.id,
+                                    data['title'],
+                                    data['type'],
+                                    data['description'],
+                                    data['obtainedFrom'],
+                                    data['recipientName'],
+                                    data['recipientAddress'],
+                                    data['relationship'],
+                                  )).then((value) => {
+                                    setState(() {}),
+                                  });
+                            },
+                          ))
+                      .toList();
 
-                return Expanded(
-                  child: ListView(children: memoList),
-                );
+                  return Expanded(
+                    child: ListView(children: memoList),
+                  );
+                }
               },
             ),
           ),
